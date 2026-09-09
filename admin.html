@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Noor Al-Quran Academy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #eef2f5; color: #333; padding: 40px 5%; }
+        
+        .admin-card { background: white; max-width: 900px; margin: auto; padding: 35px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); border-top: 6px solid #004d40; }
+        h1 { color: #004d40; margin-bottom: 20px; font-size: 28px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 14px; color: #004d40; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .file-input { background: #f8fdfc; padding: 8px; border: 1px dashed #004d40 !important; cursor: pointer; }
+        
+        .save-btn { background: #004d40; color: white; border: none; padding: 14px 30px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px; margin-top: 20px; width: 100%; transition: 0.3s; }
+        .save-btn:hover { background: #00695c; }
+        .view-btn { display: inline-block; text-align: center; background: #ffd700; color: #000; text-decoration: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-card">
+        <a href="index.html" target="_blank" class="view-btn">??? View Live Website</a>
+        <h1>Noor Al-Quran Academy - Admin Panel</h1>
+        
+        <div class="admin-grid">
+            <div class="form-group">
+                <label>Instructor Name:</label>
+                <input type="text" id="inputName">
+            </div>
+            <div class="form-group">
+                <label>WhatsApp Number (e.g. 923001234567):</label>
+                <input type="text" id="inputPhone">
+            </div>
+            <div class="form-group">
+                <label>Upload Logo Image (Computer File Pick):</label>
+                <input type="file" id="fileLogo" class="file-input" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>Upload Profile Photo (Computer File Pick):</label>
+                <input type="file" id="fileImg" class="file-input" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>2-Days Plan Fee:</label>
+                <input type="text" id="inputFee2">
+            </div>
+            <div class="form-group">
+                <label>3-Days Plan Fee:</label>
+                <input type="text" id="inputFee3">
+            </div>
+            <div class="form-group">
+                <label>5-Days Plan Fee:</label>
+                <input type="text" id="inputFee5">
+            </div>
+            <div class="form-group">
+                <label>All 7-Days Plan Fee (Daily Classes):</label>
+                <input type="text" id="inputFee7">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Instructor Bio / About Message:</label>
+            <textarea id="inputAbout" rows="4"></textarea>
+        </div>
+        <button class="save-btn" id="saveBtn" onclick="saveChanges()">Save & Update Website</button>
+    </div>
+
+    <script>
+        const defaultData = {
+            name: "Musayyab",
+            phone: "923000000000",
+            logo: "https://via.placeholder.com/100/004d40/ffd700?text=NAA",
+            img: "https://via.placeholder.com/180/004d40/ffffff?text=Musayyab",
+            about: "Assalam-o-Alaikum! Main Noor Al-Quran Academy ka founder hoon. Hamari academy me bacho aur badon ko Tajweed aur Makharij ke sahi ahkaam ke sath Quran Majeed ki taleem di jaati hai.",
+            fee2: "PKR 3,000 / Month",
+            fee3: "PKR 4,500 / Month",
+            fee5: "PKR 6,500 / Month",
+            fee7: "PKR 8,500 / Month"
+        };
+
+        function loadAdminData() {
+            let data;
+            try {
+                data = JSON.parse(localStorage.getItem('noorAcademyData')) || defaultData;
+            } catch(e) {
+                data = defaultData;
+            }
+            document.getElementById('inputName').value = data.name;
+            document.getElementById('inputPhone').value = data.phone;
+            document.getElementById('inputAbout').value = data.about;
+            document.getElementById('inputFee2').value = data.fee2;
+            document.getElementById('inputFee3').value = data.fee3;
+            document.getElementById('inputFee5').value = data.fee5;
+            document.getElementById('inputFee7').value = data.fee7;
+        }
+
+        function compressAndResizeImage(file, maxWidth, maxHeight, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', 0.8));
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveChanges() {
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.innerText = "Saving Changes...";
+            saveBtn.disabled = true;
+
+            let currentData;
+            try {
+                currentData = JSON.parse(localStorage.getItem('noorAcademyData')) || defaultData;
+            } catch(e) {
+                currentData = defaultData;
+            }
+
+            const logoFile = document.getElementById('fileLogo').files[0];
+            const imgFile = document.getElementById('fileImg').files[0];
+
+            let logoBase64 = currentData.logo;
+            let imgBase64 = currentData.img;
+
+            const finalizeSave = () => {
+                const newData = {
+                    name: document.getElementById('inputName').value,
+                    phone: document.getElementById('inputPhone').value,
+                    logo: logoBase64,
+                    img: imgBase64,
+                    about: document.getElementById('inputAbout').value,
+                    fee2: document.getElementById('inputFee2').value,
+                    fee3: document.getElementById('inputFee3').value,
+                    fee5: document.getElementById('inputFee5').value,
+                    fee7: document.getElementById('inputFee7').value
+                };
+
+                try {
+                    localStorage.setItem('noorAcademyData', JSON.stringify(newData));
+                    alert("Success! Website details have been updated.");
+                } catch(e) {
+                    alert("Storage full. Try choosing a smaller image file.");
+                }
+                saveBtn.innerText = "Save & Update Website";
+                saveBtn.disabled = false;
+            };
+
+            let tasks = 0;
+
+            if (logoFile) {
+                tasks++;
+                compressAndResizeImage(logoFile, 200, 200, function(compressedBase64) {
+                    logoBase64 = compressedBase64;
+                    tasks--;
+                    if (tasks === 0) finalizeSave();
+                });
+            }
+
+            if (imgFile) {
+                tasks++;
+                compressAndResizeImage(imgFile, 400, 400, function(compressedBase64) {
+                    imgBase64 = compressedBase64;
+                    tasks--;
+                    if (tasks === 0) finalizeSave();
+                });
+            }
+
+            if (tasks === 0) {
+                finalizeSave();
+            }
+        }
+
+        loadAdminData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor Al-Quran Academy | Online Quran Learning</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
+        body { background: #f4f7f6; color: #2c3e50; line-height: 1.6; }
+
+        header { background: #004d40; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #ffd700; background: #fff; }
+        .logo-text { font-size: 24px; font-weight: 700; color: #ffd700; letter-spacing: 0.5px; }
+        nav a { color: #e0f2f1; text-decoration: none; margin-left: 20px; font-weight: 500; font-size: 15px; transition: 0.3s; }
+        nav a:hover { color: #ffd700; }
+
+        .hero { background: linear-gradient(rgba(0,37,26,0.85), rgba(0,37,26,0.85)), url('https://images.unsplash.com/photo-1609599006353-e629aaabfeae') center/cover; color: white; padding: 110px 5% 90px; text-align: center; }
+        .hero h1 { font-size: 44px; color: #ffd700; margin-bottom: 15px; font-weight: 700; }
+        .hero p { font-size: 20px; max-width: 850px; margin: 0 auto 30px; color: #e0f2f1; }
+        .btn-whatsapp { background: #25d366; color: white; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-size: 18px; font-weight: bold; display: inline-block; box-shadow: 0 4px 15px rgba(37,211,102,0.3); transition: 0.3s; }
+        .btn-whatsapp:hover { background: #1eb954; transform: translateY(-2px); }
+
+        .container { padding: 60px 5%; max-width: 1200px; margin: auto; }
+        .section-title { text-align: center; margin-bottom: 45px; font-size: 32px; color: #004d40; position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: #ffd700; margin: 10px auto 0; border-radius: 2px; }
+
+        .instructor-card { background: white; padding: 35px; border-radius: 12px; display: flex; align-items: center; gap: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.06); }
+        .instructor-card img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #004d40; flex-shrink: 0; background: #f0f0f0; }
+        .instructor-info h3 { color: #004d40; font-size: 28px; margin-bottom: 5px; }
+        .instructor-info .subtitle { color: #00796b; font-weight: bold; margin-bottom: 15px; font-size: 16px; }
+
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        .course-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 5px solid #004d40; }
+        .course-header { padding: 20px; text-align: center; background: #f9fbfb; border-bottom: 1px solid #eee; }
+        .course-header h3 { color: #004d40; font-size: 20px; }
+        .course-body { padding: 20px; }
+        .course-body ul { list-style: none; }
+        .course-body li { padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
+        .course-body li::before { content: "? "; color: #25d366; font-weight: bold; }
+
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 5px 20px rgba(0,0,0,0.06); border-radius: 10px; overflow: hidden; }
+        th, td { padding: 16px; text-align: center; border: 1px solid #eee; }
+        th { background: #004d40; color: white; font-size: 16px; }
+        tr:nth-child(even) { background-color: #fcfcfc; }
+
+        footer { background: #00251a; color: white; text-align: center; padding: 30px 5%; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-box">
+            <img id="displayLogo" src="" alt="Logo">
+            <div class="logo-text">Noor Al-Quran Academy</div>
+        </div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#courses">Courses</a>
+            <a href="#fee">All-Days Schedule & Fee</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Learn Online Quran with Tajweed</h1>
+        <p>Ghar Baithe Tajweed Ke Sath Quran Parhein. 1-on-1 Interactive Live Classes for Kids and Adults Worldwide.</p>
+        <a id="waLink1" href="#" target="_blank" class="btn-whatsapp">Book 3-Days Free Trial Class</a>
+    </section>
+
+    <div class="container" id="about">
+        <h2 class="section-title">Instructor Profile</h2>
+        <div class="instructor-card">
+            <img id="displayImg" src="" alt="Instructor">
+            <div class="instructor-info">
+                <h3 id="displayName"></h3>
+                <div class="subtitle">Founder & Lead Quran Tutor</div>
+                <p id="displayAbout"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="courses">
+        <h2 class="section-title">Our Courses & Syllabus</h2>
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-header"><h3>Noorani Qaida</h3></div>
+                <div class="course-body">
+                    <ul>
+                        <li>Arabic Alphabets (Huroof)</li>
+                        <li>Correct Makharij & Pronunciation</li>
+                        <li>Basic Tajweed Rules</li>
+                        <li>Short Kalmas & Supplications</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="course-header"><h3>Quran Nazra with Tajweed</h3></div>
+                <div class="course-body">
+                    <ul>
+                        <li>Fluency in Quran Reading</li>
+                        <li>Noon & Meem Sakin Rules</li>
+                        <li>Ghunna, Ikhfa, Izhar, Iqlab</li>
+                        <li>Stop Signs (Waqf) Rules</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="course-header"><h3>Quran Hifz (Memorization)</h3></div>
+                <div class="course-body">
+                    <ul>
+                        <li>Daily Sabaq (New Lesson)</li>
+                        <li>Sabaqi (Recent Revision)</li>
+                        <li>Manzil (Old Revision)</li>
+                        <li>Special Revision Schedule</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="course-card">
+                <div class="course-header"><h3>Islamic Studies & Duas</h3></div>
+                <div class="course-body">
+                    <ul>
+                        <li>Namaz with Translation</li>
+                        <li>Daily Masnoon Duas</li>
+                        <li>Basic Islamic Ethics</li>
+                        <li>Short Ahadith for Kids</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="fee">
+        <h2 class="section-title">All-Days Class Schedules & Packages</h2>
+        <table>
+            <tr>
+                <th>Schedule Plan</th>
+                <th>Days / Week</th>
+                <th>Monthly Fee</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td><b>Weekend Plan</b></td>
+                <td>2 Days / Week (8 Classes/Mo)</td>
+                <td id="displayFee2"></td>
+                <td><a id="waLink2" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
+            </tr>
+            <tr>
+                <td><b>Standard Plan</b></td>
+                <td>3 Days / Week (12 Classes/Mo)</td>
+                <td id="displayFee3"></td>
+                <td><a id="waLink3" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
+            </tr>
+            <tr>
+                <td><b>Regular Plan</b></td>
+                <td>5 Days / Week (20 Classes/Mo)</td>
+                <td id="displayFee5"></td>
+                <td><a id="waLink4" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
+            </tr>
+            <tr>
+                <td><b>All-Days Intensive Plan</b></td>
+                <td>7 Days / Week (Daily Classes)</td>
+                <td id="displayFee7"></td>
+                <td><a id="waLink5" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <footer id="contact">
+        <h3>Noor Al-Quran Academy</h3>
+        <p style="margin: 10px 0;">Online Quran Education Worldwide | Contact via WhatsApp for Free Trial</p>
+        <p>&copy; 2026 Noor Al-Quran Academy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const defaultData = {
+            name: "Musayyab",
+            phone: "923000000000",
+            logo: "https://via.placeholder.com/100/004d40/ffd700?text=NAA",
+            img: "https://via.placeholder.com/180/004d40/ffffff?text=Musayyab",
+            about: "Assalam-o-Alaikum! Main Noor Al-Quran Academy ka founder hoon. Hamari academy me bacho aur badon ko Tajweed aur Makharij ke sahi ahkaam ke sath Quran Majeed ki taleem di jaati hai.",
+            fee2: "PKR 3,000 / Month",
+            fee3: "PKR 4,500 / Month",
+            fee5: "PKR 6,500 / Month",
+            fee7: "PKR 8,500 / Month"
+        };
+
+        function loadData() {
+            let data;
+            try {
+                data = JSON.parse(localStorage.getItem('noorAcademyData')) || defaultData;
+            } catch(e) {
+                data = defaultData;
+            }
+            
+            document.getElementById('displayName').innerText = data.name;
+            document.getElementById('displayImg').src = data.img;
+            document.getElementById('displayLogo').src = data.logo;
+            document.getElementById('displayAbout').innerText = data.about;
+            document.getElementById('displayFee2').innerText = data.fee2;
+            document.getElementById('displayFee3').innerText = data.fee3;
+            document.getElementById('displayFee5').innerText = data.fee5;
+            document.getElementById('displayFee7').innerText = data.fee7;
+
+            const waUrl = "https://wa.me/" + data.phone + "?text=Assalam-o-Alaikum,%20I%20want%20to%20book%20a%20Free%20Trial%20Class";
+            document.getElementById('waLink1').href = waUrl;
+            document.getElementById('waLink2').href = waUrl;
+            document.getElementById('waLink3').href = waUrl;
+            document.getElementById('waLink4').href = waUrl;
+            document.getElementById('waLink5').href = waUrl;
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
