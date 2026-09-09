@@ -31,11 +31,11 @@
         <div class="admin-grid">
             <div class="form-group">
                 <label>Instructor Name:</label>
-                <input type="text" id="inputName">
+                <input type="text" id="inputName" value="Musayyab">
             </div>
             <div class="form-group">
                 <label>WhatsApp Number (e.g. 923001234567):</label>
-                <input type="text" id="inputPhone">
+                <input type="text" id="inputPhone" value="923000000000">
             </div>
             <div class="form-group">
                 <label>Upload Logo Image:</label>
@@ -47,31 +47,40 @@
             </div>
             <div class="form-group">
                 <label>2-Days Plan Fee:</label>
-                <input type="text" id="inputFee2">
+                <input type="text" id="inputFee2" value="PKR 3,000 / Month">
             </div>
             <div class="form-group">
                 <label>3-Days Plan Fee:</label>
-                <input type="text" id="inputFee3">
+                <input type="text" id="inputFee3" value="PKR 4,500 / Month">
             </div>
             <div class="form-group">
                 <label>5-Days Plan Fee:</label>
-                <input type="text" id="inputFee5">
+                <input type="text" id="inputFee5" value="PKR 6,500 / Month">
             </div>
             <div class="form-group">
                 <label>All 7-Days Plan Fee (Daily Classes):</label>
-                <input type="text" id="inputFee7">
+                <input type="text" id="inputFee7" value="PKR 8,500 / Month">
             </div>
         </div>
         <div class="form-group">
             <label>Instructor Bio / About Message:</label>
-            <textarea id="inputAbout" rows="4"></textarea>
+            <textarea id="inputAbout" rows="4">Assalam-o-Alaikum! Main Noor Al-Quran Academy ka founder hoon. Hamari academy me bacho aur badon ko Tajweed aur Makharij ke sahi ahkaam ke sath Quran Majeed ki taleem di jaati hai.</textarea>
         </div>
         <button class="save-btn" id="saveBtn" onclick="saveChanges()">Save to MySQL Database</button>
     </div>
 
     <script>
-        // InfinityFree par banai gayi api.php ka direct URL yahan paste karein
         const API_URL = "http://noorul-quran.infinityfreeapp.com/api.php";
+
+        const defaultAdminData = {
+            name: "Musayyab",
+            phone: "923000000000",
+            about: "Assalam-o-Alaikum! Main Noor Al-Quran Academy ka founder hoon. Hamari academy me bacho aur badon ko Tajweed aur Makharij ke sahi ahkaam ke sath Quran Majeed ki taleem di jaati hai.",
+            fee2: "PKR 3,000 / Month",
+            fee3: "PKR 4,500 / Month",
+            fee5: "PKR 6,500 / Month",
+            fee7: "PKR 8,500 / Month"
+        };
 
         let currentLogo = "";
         let currentImg = "";
@@ -81,18 +90,18 @@
                 const res = await fetch(API_URL);
                 const data = await res.json();
                 
-                document.getElementById('inputName').value = data.name || '';
-                document.getElementById('inputPhone').value = data.phone || '';
-                document.getElementById('inputAbout').value = data.about || '';
-                document.getElementById('inputFee2').value = data.fee2 || '';
-                document.getElementById('inputFee3').value = data.fee3 || '';
-                document.getElementById('inputFee5').value = data.fee5 || '';
-                document.getElementById('inputFee7').value = data.fee7 || '';
+                document.getElementById('inputName').value = data.name || defaultAdminData.name;
+                document.getElementById('inputPhone').value = data.phone || defaultAdminData.phone;
+                document.getElementById('inputAbout').value = data.about || defaultAdminData.about;
+                document.getElementById('inputFee2').value = data.fee2 || defaultAdminData.fee2;
+                document.getElementById('inputFee3').value = data.fee3 || defaultAdminData.fee3;
+                document.getElementById('inputFee5').value = data.fee5 || defaultAdminData.fee5;
+                document.getElementById('inputFee7').value = data.fee7 || defaultAdminData.fee7;
                 
                 currentLogo = data.logo || '';
                 currentImg = data.img || '';
             } catch (err) {
-                alert("Error connecting to InfinityFree MySQL database.");
+                console.warn("Using default values due to connection error or empty database.");
             }
         }
 
