@@ -37,7 +37,7 @@
         .course-body { padding: 20px; }
         .course-body ul { list-style: none; }
         .course-body li { padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
-        .course-body li::before { content: "? "; color: #25d366; font-weight: bold; }
+        .course-body li::before { content: "✓ "; color: #25d366; font-weight: bold; }
 
         table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 5px 20px rgba(0,0,0,0.06); border-radius: 10px; overflow: hidden; }
         th, td { padding: 16px; text-align: center; border: 1px solid #eee; }
@@ -51,7 +51,7 @@
 
     <header>
         <div class="logo-box">
-            <img id="displayLogo" src="" alt="Logo">
+            <img id="displayLogo" src="https://via.placeholder.com/100/004d40/ffd700?text=NAA" alt="Logo">
             <div class="logo-text">Noor Al-Quran Academy</div>
         </div>
         <nav>
@@ -71,11 +71,11 @@
     <div class="container" id="about">
         <h2 class="section-title">Instructor Profile</h2>
         <div class="instructor-card">
-            <img id="displayImg" src="" alt="Instructor">
+            <img id="displayImg" src="https://via.placeholder.com/180/004d40/ffffff?text=Musayyab" alt="Instructor">
             <div class="instructor-info">
-                <h3 id="displayName"></h3>
+                <h3 id="displayName">Musayyab</h3>
                 <div class="subtitle">Founder & Lead Quran Tutor</div>
-                <p id="displayAbout"></p>
+                <p id="displayAbout">Assalam-o-Alaikum! Main Noor Al-Quran Academy ka founder hoon. Hamari academy me bacho aur badon ko Tajweed aur Makharij ke sahi ahkaam ke sath Quran Majeed ki taleem di jaati hai.</p>
             </div>
         </div>
     </div>
@@ -142,25 +142,25 @@
             <tr>
                 <td><b>Weekend Plan</b></td>
                 <td>2 Days / Week (8 Classes/Mo)</td>
-                <td id="displayFee2"></td>
+                <td id="displayFee2">PKR 3,000 / Month</td>
                 <td><a id="waLink2" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
             </tr>
             <tr>
                 <td><b>Standard Plan</b></td>
                 <td>3 Days / Week (12 Classes/Mo)</td>
-                <td id="displayFee3"></td>
+                <td id="displayFee3">PKR 4,500 / Month</td>
                 <td><a id="waLink3" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
             </tr>
             <tr>
                 <td><b>Regular Plan</b></td>
                 <td>5 Days / Week (20 Classes/Mo)</td>
-                <td id="displayFee5"></td>
+                <td id="displayFee5">PKR 6,500 / Month</td>
                 <td><a id="waLink4" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
             </tr>
             <tr>
                 <td><b>All-Days Intensive Plan</b></td>
                 <td>7 Days / Week (Daily Classes)</td>
-                <td id="displayFee7"></td>
+                <td id="displayFee7">PKR 8,500 / Month</td>
                 <td><a id="waLink5" href="#" target="_blank" class="btn-whatsapp" style="padding: 6px 15px; font-size: 14px;">Select Plan</a></td>
             </tr>
         </table>
@@ -173,41 +173,36 @@
     </footer>
 
     <script>
-        const defaultData = {
-            name: "Musayyab",
-            phone: "923000000000",
-            logo: "https://via.placeholder.com/100/004d40/ffd700?text=NAA",
-            img: "https://via.placeholder.com/180/004d40/ffffff?text=Musayyab",
-            about: "Assalam-o-Alaikum! Main Noor Al-Quran Academy ka founder hoon. Hamari academy me bacho aur badon ko Tajweed aur Makharij ke sahi ahkaam ke sath Quran Majeed ki taleem di jaati hai.",
-            fee2: "PKR 3,000 / Month",
-            fee3: "PKR 4,500 / Month",
-            fee5: "PKR 6,500 / Month",
-            fee7: "PKR 8,500 / Month"
-        };
+        // Replace this with your actual InfinityFree uploaded api.php URL
+        const API_URL = "http://your-subdomain.infinityfreeapp.com/api.php";
 
-        function loadData() {
-            let data;
+        async function loadData() {
             try {
-                data = JSON.parse(localStorage.getItem('noorAcademyData')) || defaultData;
-            } catch(e) {
-                data = defaultData;
-            }
-            
-            document.getElementById('displayName').innerText = data.name;
-            document.getElementById('displayImg').src = data.img;
-            document.getElementById('displayLogo').src = data.logo;
-            document.getElementById('displayAbout').innerText = data.about;
-            document.getElementById('displayFee2').innerText = data.fee2;
-            document.getElementById('displayFee3').innerText = data.fee3;
-            document.getElementById('displayFee5').innerText = data.fee5;
-            document.getElementById('displayFee7').innerText = data.fee7;
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("Network response was not ok");
+                
+                const data = await response.json();
 
-            const waUrl = "https://wa.me/" + data.phone + "?text=Assalam-o-Alaikum,%20I%20want%20to%20book%20a%20Free%20Trial%20Class";
-            document.getElementById('waLink1').href = waUrl;
-            document.getElementById('waLink2').href = waUrl;
-            document.getElementById('waLink3').href = waUrl;
-            document.getElementById('waLink4').href = waUrl;
-            document.getElementById('waLink5').href = waUrl;
+                if (data.name) document.getElementById('displayName').innerText = data.name;
+                if (data.img) document.getElementById('displayImg').src = data.img;
+                if (data.logo) document.getElementById('displayLogo').src = data.logo;
+                if (data.about) document.getElementById('displayAbout').innerText = data.about;
+                if (data.fee2) document.getElementById('displayFee2').innerText = data.fee2;
+                if (data.fee3) document.getElementById('displayFee3').innerText = data.fee3;
+                if (data.fee5) document.getElementById('displayFee5').innerText = data.fee5;
+                if (data.fee7) document.getElementById('displayFee7').innerText = data.fee7;
+
+                if (data.phone) {
+                    const waUrl = "https://wa.me/" + data.phone + "?text=Assalam-o-Alaikum,%20I%20want%20to%20book%20a%20Free%20Trial%20Class";
+                    document.getElementById('waLink1').href = waUrl;
+                    document.getElementById('waLink2').href = waUrl;
+                    document.getElementById('waLink3').href = waUrl;
+                    document.getElementById('waLink4').href = waUrl;
+                    document.getElementById('waLink5').href = waUrl;
+                }
+            } catch (err) {
+                console.warn("Could not fetch data from InfinityFree backend. Displaying default template values.", err);
+            }
         }
 
         loadData();
