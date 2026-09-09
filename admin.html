@@ -86,24 +86,37 @@
         let currentImg = "";
 
         async function loadAdminData() {
-            try {
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                
-                document.getElementById('inputName').value = data.name || defaultAdminData.name;
-                document.getElementById('inputPhone').value = data.phone || defaultAdminData.phone;
-                document.getElementById('inputAbout').value = data.about || defaultAdminData.about;
-                document.getElementById('inputFee2').value = data.fee2 || defaultAdminData.fee2;
-                document.getElementById('inputFee3').value = data.fee3 || defaultAdminData.fee3;
-                document.getElementById('inputFee5').value = data.fee5 || defaultAdminData.fee5;
-                document.getElementById('inputFee7').value = data.fee7 || defaultAdminData.fee7;
-                
-                currentLogo = data.logo || '';
-                currentImg = data.img || '';
-            } catch (err) {
-                console.warn("Using default values due to connection error or empty database.");
-            }
-        }
+    try {
+        const res = await fetch(API_URL + "?t=" + new Date().getTime());
+        if (!res.ok) throw new Error("Network error");
+        
+        const data = await res.json();
+        
+        // Helper function: Returns default value if API value is null, undefined, or empty string ""
+        const getValue = (val, fallback) => (val !== null && val !== undefined && val.trim() !== "") ? val : fallback;
+
+        document.getElementById('inputName').value = getValue(data.name, defaultAdminData.name);
+        document.getElementById('inputPhone').value = getValue(data.phone, defaultAdminData.phone);
+        document.getElementById('inputAbout').value = getValue(data.about, defaultAdminData.about);
+        document.getElementById('inputFee2').value = getValue(data.fee2, defaultAdminData.fee2);
+        document.getElementById('inputFee3').value = getValue(data.fee3, defaultAdminData.fee3);
+        document.getElementById('inputFee5').value = getValue(data.fee5, defaultAdminData.fee5);
+        document.getElementById('inputFee7').value = getValue(data.fee7, defaultAdminData.fee7);
+        
+        currentLogo = data.logo || '';
+        currentImg = data.img || '';
+    } catch (err) {
+        console.warn("API Error. Using standard default values:", err);
+        // Fallback if fetch fails completely
+        document.getElementById('inputName').value = defaultAdminData.name;
+        document.getElementById('inputPhone').value = defaultAdminData.phone;
+        document.getElementById('inputAbout').value = defaultAdminData.about;
+        document.getElementById('inputFee2').value = defaultAdminData.fee2;
+        document.getElementById('inputFee3').value = defaultAdminData.fee3;
+        document.getElementById('inputFee5').value = defaultAdminData.fee5;
+        document.getElementById('inputFee7').value = defaultAdminData.fee7;
+    }
+}
 
         function compressAndResizeImage(file, maxWidth, maxHeight, callback) {
             const reader = new FileReader();
