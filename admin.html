@@ -174,6 +174,9 @@
                         body: JSON.stringify(payload)
                     });
                     const result = await res.json();
+
+                    console.log(`${JSON.stringify(result)}`);
+                    
                     if (result.status === "success") {
                         alert("Data updated successfully in MySQL! Global users can now see updates.");
                     } else {
